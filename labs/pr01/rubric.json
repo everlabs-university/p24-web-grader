@@ -1,0 +1,16 @@
+{
+  "id": "pr01",
+  "title": "Practical 1 — Personal Card",
+  "maxPoints": 80,
+  "passPoints": 48,
+  "tests": [
+    { "fullName": "personal names are non-empty and contain no TODO", "points": 10 },
+    { "fullName": "group is one of the documented P-24 groups", "points": 10 },
+    { "fullName": "fullName combines firstName and lastName", "points": 10 },
+    { "fullName": "specialty is a non-empty value", "points": 10 },
+    { "fullName": "weeklyHours is a realistic finite number", "points": 10 },
+    { "fullName": "semester workload is calculated from 15 weeks", "points": 10 },
+    { "fullName": "intro contains the generated profile details", "points": 10 },
+    { "fullName": "renderProfile receives the profile exactly once", "points": 10 }
+  ]
+}

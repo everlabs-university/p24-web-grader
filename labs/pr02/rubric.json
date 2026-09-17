@@ -1,0 +1,16 @@
+{
+  "id": "pr02",
+  "title": "Practical 2 — Smart Checkout",
+  "maxPoints": 80,
+  "passPoints": 48,
+  "tests": [
+    { "fullName": "pickup without a discount keeps a 500 UAH total", "points": 10 },
+    { "fullName": "a student receives 5 percent before standard delivery", "points": 10 },
+    { "fullName": "a 1000 UAH order receives 10 percent and free standard delivery", "points": 10 },
+    { "fullName": "express delivery stays 150 UAH and the stronger discount wins", "points": 10 },
+    { "fullName": "the 1000 UAH discount boundary is inclusive", "points": 10 },
+    { "fullName": "standard delivery becomes free at a discounted subtotal of 750", "points": 10 },
+    { "fullName": "invalid subtotal values return an error result without throwing", "points": 10 },
+    { "fullName": "invalid student or delivery values return an error result without throwing", "points": 10 }
+  ]
+}

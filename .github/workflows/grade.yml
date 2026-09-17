@@ -1,0 +1,31 @@
+name: P-24 automatic tests
+
+on:
+  workflow_call:
+
+concurrency:
+  group: p24-web-grade-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  grade:
+    name: P-24 automatic tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the student repository
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+      - name: Grade the practicals
+        uses: everlabs-university/p24-web-grader@semester-2026

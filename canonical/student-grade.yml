@@ -1,0 +1,12 @@
+name: P-24 automatic tests
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  grade:
+    uses: everlabs-university/p24-web-grader/.github/workflows/grade.yml@semester-2026

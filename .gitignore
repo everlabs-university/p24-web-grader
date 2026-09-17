@@ -1,0 +1,5 @@
+node_modules/
+.p24-web-grader/
+coverage/
+dist/
+.DS_Store

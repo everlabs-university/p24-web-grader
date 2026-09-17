@@ -1,0 +1,31 @@
+name: P-24 web grader
+description: Runs the canonical P-24 automatic tests and publishes the result to the GitHub step summary.
+
+inputs:
+  student-root:
+    description: Root of the student repository being graded.
+    required: false
+    default: ${{ github.workspace }}
+  sha:
+    description: Student commit the automatic tests are run against.
+    required: false
+    default: ${{ github.sha }}
+  summary-file:
+    description: Summary file. An empty value means $GITHUB_STEP_SUMMARY.
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - name: Grade the P-24 practicals
+      shell: bash
+      env:
+        STUDENT_ROOT: ${{ inputs.student-root }}
+        STUDENT_SHA: ${{ inputs.sha }}
+        SUMMARY_FILE: ${{ inputs.summary-file }}
+      run: |
+        node "${GITHUB_ACTION_PATH}/src/run.mjs" \
+          --student-root "${STUDENT_ROOT}" \
+          --sha "${STUDENT_SHA}" \
+          --summary-file "${SUMMARY_FILE:-$GITHUB_STEP_SUMMARY}"
