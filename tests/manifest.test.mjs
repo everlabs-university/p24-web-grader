@@ -41,11 +41,11 @@ async function writeRubric(root, labId, text) {
 }
 
 describe('shipped grader manifest', () => {
-  it('publishes PR01 while PR02 remains prepared but inactive', async () => {
+  it('publishes PR01 and PR02 cumulatively', async () => {
     assert.deepStrictEqual(await loadPublished(GRADER_ROOT), {
       schemaVersion: 1,
-      graderVersion: '2026.09.17.1',
-      labs: ['pr01'],
+      graderVersion: '2026.09.17.2',
+      labs: ['pr01', 'pr02'],
     });
   });
 

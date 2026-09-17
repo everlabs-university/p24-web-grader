@@ -9,8 +9,9 @@ Student repositories call the reusable workflow from the `semester-2026`
 branch. A practical becomes active only when its id is added to
 `published.json` on that branch.
 
-PR01 is active now. PR02 is already implemented and tested in this repository,
-but remains inactive until it is added to the release manifest.
+This release candidate activates PR01 and PR02 cumulatively. It becomes the
+student-facing grader only after this branch is fast-forwarded into
+`semester-2026`.
 
 ## Layout
 
