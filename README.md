@@ -9,7 +9,7 @@ Student repositories call the reusable workflow from the `semester-2026`
 branch. A practical becomes active only when its id is added to
 `published.json` on that branch.
 
-The `semester-2026` branch currently publishes PR01 through PR04
+The `semester-2026` branch currently publishes PR01 through PR05
 cumulatively for every student repository.
 
 ## Layout
