@@ -1,0 +1,16 @@
+{
+  "id": "pr05",
+  "title": "Practical 5 — Modular Shopping Cart",
+  "maxPoints": 80,
+  "passPoints": 48,
+  "tests": [
+    { "fullName": "adding a new product creates a normalized line without mutating inputs", "points": 10 },
+    { "fullName": "adding an existing product merges quantities in the original line order", "points": 10 },
+    { "fullName": "stock limits and invalid additions return errors without throwing", "points": 10 },
+    { "fullName": "removing a product returns a new cart and preserves the source", "points": 10 },
+    { "fullName": "removing an unknown product returns an error without throwing", "points": 10 },
+    { "fullName": "the summary reports exact counts subtotal shipping and total", "points": 10 },
+    { "fullName": "the strongest discount wins and shipping uses the discounted subtotal", "points": 10 },
+    { "fullName": "malformed carts and promo codes return errors without throwing", "points": 10 }
+  ]
+}

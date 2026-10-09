@@ -53,6 +53,17 @@ const PR04_BEHAVIOURS = [
   'repeated analysis returns independent players and score arrays',
 ];
 
+const PR05_BEHAVIOURS = [
+  'adding a new product creates a normalized line without mutating inputs',
+  'adding an existing product merges quantities in the original line order',
+  'stock limits and invalid additions return errors without throwing',
+  'removing a product returns a new cart and preserves the source',
+  'removing an unknown product returns an error without throwing',
+  'the summary reports exact counts subtotal shipping and total',
+  'the strongest discount wins and shipping uses the discounted subtotal',
+  'malformed carts and promo codes return errors without throwing',
+];
+
 async function writePublished(root, text) {
   await writeFile(join(root, 'published.json'), text, 'utf8');
 }
@@ -63,11 +74,11 @@ async function writeRubric(root, labId, text) {
 }
 
 describe('shipped grader manifest', () => {
-  it('loads the PR04 draft manifest cumulatively', async () => {
+  it('loads the PR05 draft manifest cumulatively', async () => {
     assert.deepStrictEqual(await loadPublished(GRADER_ROOT), {
       schemaVersion: 1,
-      graderVersion: '2026.10.09.2-draft',
-      labs: ['pr01', 'pr02', 'pr03', 'pr04'],
+      graderVersion: '2026.10.09.3-draft',
+      labs: ['pr01', 'pr02', 'pr03', 'pr04', 'pr05'],
     });
   });
 
@@ -76,6 +87,7 @@ describe('shipped grader manifest', () => {
     ['pr02', 'Practical 2 — Smart Checkout', PR02_BEHAVIOURS],
     ['pr03', 'Practical 3 — Workout Timer Core', PR03_BEHAVIOURS],
     ['pr04', 'Practical 4 — Leaderboard Analyzer', PR04_BEHAVIOURS],
+    ['pr05', 'Practical 5 — Modular Shopping Cart', PR05_BEHAVIOURS],
   ]) {
     it(`loads ${labId} as eight ten-point behaviours with a 48 pass mark`, async () => {
       const rubric = await loadRubric(GRADER_ROOT, labId);
