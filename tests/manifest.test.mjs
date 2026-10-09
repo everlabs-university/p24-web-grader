@@ -117,6 +117,17 @@ const PR05_BEHAVIOURS = [
   'malformed carts and promo codes return errors without throwing',
 ];
 
+const PR06_BEHAVIOURS = [
+  'creating a quiz validates and clones the question model',
+  'selecting an answer updates state immutably and rejects unknown answers',
+  'submitting locks the answer and awards each question at most once',
+  'next question advances the flow and completes the final question',
+  'restarting produces a clean independent quiz state',
+  'mounting renders the first question answers and progress accessibly',
+  'the browser flow selects submits advances and renders final results',
+  'invalid quiz data renders an accessible error without throwing',
+];
+
 async function writePublished(root, text) {
   await writeFile(join(root, 'published.json'), text, 'utf8');
 }
@@ -127,11 +138,11 @@ async function writeRubric(root, labId, text) {
 }
 
 describe('shipped grader manifest', () => {
-  it('loads the published PR05 manifest cumulatively', async () => {
+  it('loads the published PR06 manifest cumulatively', async () => {
     assert.deepStrictEqual(await loadPublished(GRADER_ROOT), {
       schemaVersion: 1,
-      graderVersion: '2026.10.19.1',
-      labs: ['pr01', 'pr02', 'pr03', 'pr04', 'pr05'],
+      graderVersion: '2026.10.30.1',
+      labs: ['pr01', 'pr02', 'pr03', 'pr04', 'pr05', 'pr06'],
     });
   });
 
@@ -141,6 +152,7 @@ describe('shipped grader manifest', () => {
     ['pr03', 'Practical 3 — Workout Timer Core', PR03_BEHAVIOURS],
     ['pr04', 'Practical 4 — Leaderboard Analyzer', PR04_BEHAVIOURS],
     ['pr05', 'Practical 5 — Modular Shopping Cart', PR05_BEHAVIOURS],
+    ['pr06', 'Practical 6 — Interactive Quiz', PR06_BEHAVIOURS],
   ]) {
     it(`loads ${labId} as eight ten-point behaviours with a 48 pass mark`, async () => {
       const rubric = await loadRubric(GRADER_ROOT, labId);
