@@ -9,7 +9,7 @@ Student repositories call the reusable workflow from the `semester-2026`
 branch. A practical becomes active only when its id is added to
 `published.json` on that branch.
 
-This local draft prepares PR01, PR02, and PR03 cumulatively. It becomes the
+This local draft prepares PR01 through PR04 cumulatively. It becomes the
 student-facing grader only after this branch is fast-forwarded into
 `semester-2026`.
 
