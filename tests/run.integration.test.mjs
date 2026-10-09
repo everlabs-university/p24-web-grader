@@ -76,7 +76,7 @@ describe('node src/run.mjs', () => {
     await rm(join(STARTER_FIXTURE, TEMP_SUITE_DIRNAME), { recursive: true, force: true });
   });
 
-  it('scores all three draft practicals 80/80 and exits 0', { timeout: RUN_TIMEOUT_MS }, async () => {
+  it('scores all three published practicals 80/80 and exits 0', { timeout: RUN_TIMEOUT_MS }, async () => {
     const result = await runGrader({ studentRoot: PASS_FIXTURE, summaryFile, resultFile });
     assert.equal(result.code, 0, `stderr:\n${result.stderr}`);
 
