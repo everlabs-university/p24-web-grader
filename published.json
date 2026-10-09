@@ -1,5 +1,5 @@
 {
   "schemaVersion": 1,
-  "graderVersion": "2026.10.09.3-draft",
-  "labs": ["pr01", "pr02", "pr03", "pr04", "pr05"]
+  "graderVersion": "2026.10.09.4-draft",
+  "labs": ["pr01", "pr02", "pr03", "pr04", "pr05", "pr06"]
 }

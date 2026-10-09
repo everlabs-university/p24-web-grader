@@ -76,7 +76,7 @@ describe('node src/run.mjs', () => {
     await rm(join(STARTER_FIXTURE, TEMP_SUITE_DIRNAME), { recursive: true, force: true });
   });
 
-  it('scores all five draft practicals 80/80 and exits 0', { timeout: RUN_TIMEOUT_MS }, async () => {
+  it('scores all six draft practicals 80/80 and exits 0', { timeout: RUN_TIMEOUT_MS }, async () => {
     const result = await runGrader({ studentRoot: PASS_FIXTURE, summaryFile, resultFile });
     assert.equal(result.code, 0, `stderr:\n${result.stderr}`);
 
@@ -85,12 +85,13 @@ describe('node src/run.mjs', () => {
     assert.match(summary, /Smart Checkout \| 80\/80 \| PASS/);
     assert.match(summary, /Leaderboard Analyzer \| 80\/80 \| PASS/);
     assert.match(summary, /Modular Shopping Cart \| 80\/80 \| PASS/);
+    assert.match(summary, /Interactive Quiz \| 80\/80 \| PASS/);
     assert.ok(summary.includes(STUDENT_SHA));
 
     const report = await readResult(resultFile);
-    assert.equal(report.totalPoints, 400);
-    assert.equal(report.totalMaxPoints, 400);
-    assert.deepStrictEqual(report.labs.map(({ points }) => points), [80, 80, 80, 80, 80]);
+    assert.equal(report.totalPoints, 480);
+    assert.equal(report.totalMaxPoints, 480);
+    assert.deepStrictEqual(report.labs.map(({ points }) => points), [80, 80, 80, 80, 80, 80]);
     assertTemporarySuiteRemoved(PASS_FIXTURE);
   });
 
@@ -99,10 +100,10 @@ describe('node src/run.mjs', () => {
     assert.equal(result.code, 1, `stderr:\n${result.stderr}`);
 
     const report = await readResult(resultFile);
-    assert.equal(report.totalPoints, 90);
-    assert.equal(report.totalMaxPoints, 400);
-    assert.deepStrictEqual(report.labs.map(({ points }) => points), [20, 20, 10, 10, 30]);
-    assert.deepStrictEqual(report.labs.map(({ status }) => status), ['FAIL', 'FAIL', 'FAIL', 'FAIL', 'FAIL']);
+    assert.equal(report.totalPoints, 100);
+    assert.equal(report.totalMaxPoints, 480);
+    assert.deepStrictEqual(report.labs.map(({ points }) => points), [20, 20, 10, 10, 30, 10]);
+    assert.deepStrictEqual(report.labs.map(({ status }) => status), ['FAIL', 'FAIL', 'FAIL', 'FAIL', 'FAIL', 'FAIL']);
     assertTemporarySuiteRemoved(STARTER_FIXTURE);
   });
 
