@@ -1,0 +1,16 @@
+{
+  "id": "pr04",
+  "title": "Practical 4 — Leaderboard Analyzer",
+  "maxPoints": 80,
+  "passPoints": 48,
+  "tests": [
+    { "fullName": "each player receives an exact total average and best score", "label": "Player statistics", "points": 10 },
+    { "fullName": "players are sorted from the strongest average to the weakest", "label": "Average score ordering", "points": 10 },
+    { "fullName": "equal averages use best score and then name as deterministic tie breakers", "label": "Tie-break ordering", "points": 10 },
+    { "fullName": "sorted players receive sequential ranks starting at one", "label": "Sequential ranking", "points": 10 },
+    { "fullName": "the summary reports player count class average and highest score", "label": "Leaderboard summary", "points": 10 },
+    { "fullName": "invalid leaderboard data returns an error result without throwing", "label": "Invalid data handling", "points": 10 },
+    { "fullName": "analysis leaves the source players and nested score arrays unchanged", "label": "Source data immutability", "points": 10 },
+    { "fullName": "repeated analysis returns independent players and score arrays", "label": "Independent analysis results", "points": 10 }
+  ]
+}

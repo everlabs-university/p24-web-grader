@@ -42,6 +42,17 @@ const PR03_BEHAVIOURS = [
   'repeated calls return independent step arrays',
 ];
 
+const PR04_BEHAVIOURS = [
+  'each player receives an exact total average and best score',
+  'players are sorted from the strongest average to the weakest',
+  'equal averages use best score and then name as deterministic tie breakers',
+  'sorted players receive sequential ranks starting at one',
+  'the summary reports player count class average and highest score',
+  'invalid leaderboard data returns an error result without throwing',
+  'analysis leaves the source players and nested score arrays unchanged',
+  'repeated analysis returns independent players and score arrays',
+];
+
 const PUBLIC_LABELS = {
   pr01: [
     'Personal name completion',
@@ -73,6 +84,16 @@ const PUBLIC_LABELS = {
     'Invalid workout input handling',
     'Independent plan results',
   ],
+  pr04: [
+    'Player statistics',
+    'Average score ordering',
+    'Tie-break ordering',
+    'Sequential ranking',
+    'Leaderboard summary',
+    'Invalid data handling',
+    'Source data immutability',
+    'Independent analysis results',
+  ],
 };
 
 async function writePublished(root, text) {
@@ -85,11 +106,11 @@ async function writeRubric(root, labId, text) {
 }
 
 describe('shipped grader manifest', () => {
-  it('loads the published PR03 manifest cumulatively', async () => {
+  it('loads the published PR04 manifest cumulatively', async () => {
     assert.deepStrictEqual(await loadPublished(GRADER_ROOT), {
       schemaVersion: 1,
-      graderVersion: '2026.10.12.1',
-      labs: ['pr01', 'pr02', 'pr03'],
+      graderVersion: '2026.10.15.1',
+      labs: ['pr01', 'pr02', 'pr03', 'pr04'],
     });
   });
 
@@ -97,6 +118,7 @@ describe('shipped grader manifest', () => {
     ['pr01', 'Practical 1 — Personal Card', PR01_BEHAVIOURS],
     ['pr02', 'Practical 2 — Smart Checkout', PR02_BEHAVIOURS],
     ['pr03', 'Practical 3 — Workout Timer Core', PR03_BEHAVIOURS],
+    ['pr04', 'Practical 4 — Leaderboard Analyzer', PR04_BEHAVIOURS],
   ]) {
     it(`loads ${labId} as eight ten-point behaviours with a 48 pass mark`, async () => {
       const rubric = await loadRubric(GRADER_ROOT, labId);

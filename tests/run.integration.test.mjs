@@ -76,19 +76,21 @@ describe('node src/run.mjs', () => {
     await rm(join(STARTER_FIXTURE, TEMP_SUITE_DIRNAME), { recursive: true, force: true });
   });
 
-  it('scores all three published practicals 80/80 and exits 0', { timeout: RUN_TIMEOUT_MS }, async () => {
+  it('scores all four published practicals 80/80 and exits 0', { timeout: RUN_TIMEOUT_MS }, async () => {
     const result = await runGrader({ studentRoot: PASS_FIXTURE, summaryFile, resultFile });
     assert.equal(result.code, 0, `stderr:\n${result.stderr}`);
 
     const summary = await readFile(summaryFile, 'utf8');
     assert.match(summary, /Personal Card \| 80\/80 \| PASS/);
     assert.match(summary, /Smart Checkout \| 80\/80 \| PASS/);
+    assert.match(summary, /Workout Timer Core \| 80\/80 \| PASS/);
+    assert.match(summary, /Leaderboard Analyzer \| 80\/80 \| PASS/);
     assert.ok(summary.includes(STUDENT_SHA));
 
     const report = await readResult(resultFile);
-    assert.equal(report.totalPoints, 240);
-    assert.equal(report.totalMaxPoints, 240);
-    assert.deepStrictEqual(report.labs.map(({ points }) => points), [80, 80, 80]);
+    assert.equal(report.totalPoints, 320);
+    assert.equal(report.totalMaxPoints, 320);
+    assert.deepStrictEqual(report.labs.map(({ points }) => points), [80, 80, 80, 80]);
     assertTemporarySuiteRemoved(PASS_FIXTURE);
   });
 
@@ -97,10 +99,10 @@ describe('node src/run.mjs', () => {
     assert.equal(result.code, 1, `stderr:\n${result.stderr}`);
 
     const report = await readResult(resultFile);
-    assert.equal(report.totalPoints, 50);
-    assert.equal(report.totalMaxPoints, 240);
-    assert.deepStrictEqual(report.labs.map(({ points }) => points), [20, 20, 10]);
-    assert.deepStrictEqual(report.labs.map(({ status }) => status), ['FAIL', 'FAIL', 'FAIL']);
+    assert.equal(report.totalPoints, 60);
+    assert.equal(report.totalMaxPoints, 320);
+    assert.deepStrictEqual(report.labs.map(({ points }) => points), [20, 20, 10, 10]);
+    assert.deepStrictEqual(report.labs.map(({ status }) => status), ['FAIL', 'FAIL', 'FAIL', 'FAIL']);
     assertTemporarySuiteRemoved(STARTER_FIXTURE);
   });
 
