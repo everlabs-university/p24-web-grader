@@ -1,0 +1,16 @@
+{
+  "id": "pr03",
+  "title": "Practical 3 — Workout Timer Core",
+  "maxPoints": 80,
+  "passPoints": 48,
+  "tests": [
+    { "fullName": "one workout round contains one work step and no trailing rest", "points": 10 },
+    { "fullName": "multiple rounds alternate work and rest in order", "points": 10 },
+    { "fullName": "the final round never adds a trailing rest step", "points": 10 },
+    { "fullName": "zero rest seconds omits rest steps without breaking round numbers", "points": 10 },
+    { "fullName": "the plan reports the exact total duration", "points": 10 },
+    { "fullName": "formatDuration returns zero-padded minute and second text", "points": 10 },
+    { "fullName": "invalid workout values return an error result without throwing", "points": 10 },
+    { "fullName": "repeated calls return independent step arrays", "points": 10 }
+  ]
+}

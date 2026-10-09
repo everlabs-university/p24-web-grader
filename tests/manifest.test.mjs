@@ -31,6 +31,17 @@ const PR02_BEHAVIOURS = [
   'invalid student or delivery values return an error result without throwing',
 ];
 
+const PR03_BEHAVIOURS = [
+  'one workout round contains one work step and no trailing rest',
+  'multiple rounds alternate work and rest in order',
+  'the final round never adds a trailing rest step',
+  'zero rest seconds omits rest steps without breaking round numbers',
+  'the plan reports the exact total duration',
+  'formatDuration returns zero-padded minute and second text',
+  'invalid workout values return an error result without throwing',
+  'repeated calls return independent step arrays',
+];
+
 async function writePublished(root, text) {
   await writeFile(join(root, 'published.json'), text, 'utf8');
 }
@@ -41,17 +52,18 @@ async function writeRubric(root, labId, text) {
 }
 
 describe('shipped grader manifest', () => {
-  it('publishes PR01 and PR02 cumulatively', async () => {
+  it('loads the PR03 draft manifest cumulatively', async () => {
     assert.deepStrictEqual(await loadPublished(GRADER_ROOT), {
       schemaVersion: 1,
-      graderVersion: '2026.09.17.2',
-      labs: ['pr01', 'pr02'],
+      graderVersion: '2026.10.09.1-draft',
+      labs: ['pr01', 'pr02', 'pr03'],
     });
   });
 
   for (const [labId, title, behaviours] of [
     ['pr01', 'Practical 1 — Personal Card', PR01_BEHAVIOURS],
     ['pr02', 'Practical 2 — Smart Checkout', PR02_BEHAVIOURS],
+    ['pr03', 'Practical 3 — Workout Timer Core', PR03_BEHAVIOURS],
   ]) {
     it(`loads ${labId} as eight ten-point behaviours with a 48 pass mark`, async () => {
       const rubric = await loadRubric(GRADER_ROOT, labId);

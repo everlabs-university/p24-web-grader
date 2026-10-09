@@ -76,7 +76,7 @@ describe('node src/run.mjs', () => {
     await rm(join(STARTER_FIXTURE, TEMP_SUITE_DIRNAME), { recursive: true, force: true });
   });
 
-  it('scores both active known-good practicals 80/80 and exits 0', { timeout: RUN_TIMEOUT_MS }, async () => {
+  it('scores all three draft practicals 80/80 and exits 0', { timeout: RUN_TIMEOUT_MS }, async () => {
     const result = await runGrader({ studentRoot: PASS_FIXTURE, summaryFile, resultFile });
     assert.equal(result.code, 0, `stderr:\n${result.stderr}`);
 
@@ -86,9 +86,9 @@ describe('node src/run.mjs', () => {
     assert.ok(summary.includes(STUDENT_SHA));
 
     const report = await readResult(resultFile);
-    assert.equal(report.totalPoints, 160);
-    assert.equal(report.totalMaxPoints, 160);
-    assert.deepStrictEqual(report.labs.map(({ points }) => points), [80, 80]);
+    assert.equal(report.totalPoints, 240);
+    assert.equal(report.totalMaxPoints, 240);
+    assert.deepStrictEqual(report.labs.map(({ points }) => points), [80, 80, 80]);
     assertTemporarySuiteRemoved(PASS_FIXTURE);
   });
 
@@ -97,10 +97,10 @@ describe('node src/run.mjs', () => {
     assert.equal(result.code, 1, `stderr:\n${result.stderr}`);
 
     const report = await readResult(resultFile);
-    assert.equal(report.totalPoints, 40);
-    assert.equal(report.totalMaxPoints, 160);
-    assert.deepStrictEqual(report.labs.map(({ points }) => points), [20, 20]);
-    assert.deepStrictEqual(report.labs.map(({ status }) => status), ['FAIL', 'FAIL']);
+    assert.equal(report.totalPoints, 50);
+    assert.equal(report.totalMaxPoints, 240);
+    assert.deepStrictEqual(report.labs.map(({ points }) => points), [20, 20, 10]);
+    assert.deepStrictEqual(report.labs.map(({ status }) => status), ['FAIL', 'FAIL', 'FAIL']);
     assertTemporarySuiteRemoved(STARTER_FIXTURE);
   });
 
