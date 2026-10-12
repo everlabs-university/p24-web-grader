@@ -121,12 +121,18 @@ export function scoreLab(rubric, assertions) {
     const awarded = passed ? test.points : 0;
     points += awarded;
     if (passed) passedTests += 1;
-    tests.push({
+    const scoredTest = {
       fullName: test.fullName,
       points: test.points,
       awarded,
       status: behaviourStatus(outcome),
-    });
+    };
+
+    if (isNonEmptyString(test.label)) {
+      scoredTest.label = test.label;
+    }
+
+    tests.push(scoredTest);
   }
 
   return {

@@ -4,6 +4,7 @@ const TABLE_DIVIDER = '| --- | --- | --- |';
 const PROVISIONAL_NOTE =
   'This result is provisional until the canonical grader is re-run locally on the same SHA.';
 const KNOWN_STATUSES = new Set(['PASS', 'FAIL']);
+const KNOWN_CHECK_STATUSES = new Set(['passed', 'failed', 'missing']);
 
 function summaryError(message) {
   const error = new Error(message);
@@ -58,6 +59,51 @@ function renderRow(labScore, index) {
   return `| ${escapeCell(labScore.title)} | ${labScore.points}/${labScore.maxPoints} | ${labScore.status} |`;
 }
 
+function renderDetails(labScore, labIndex) {
+  if (!Array.isArray(labScore.tests)) {
+    throw summaryError(
+      `labScores[${labIndex}].tests must be an array, received ${formatValue(labScore.tests)}.`,
+    );
+  }
+
+  const rows = labScore.tests.map((test, testIndex) => {
+    if (!isPlainObject(test)) {
+      throw summaryError(
+        `labScores[${labIndex}].tests[${testIndex}] must be an object, received ${formatValue(test)}.`,
+      );
+    }
+
+    if (!isNonEmptyString(test.label)) {
+      throw summaryError(
+        `labScores[${labIndex}].tests[${testIndex}].label must be a non-empty public label.`,
+      );
+    }
+
+    if (!Number.isInteger(test.points) || !Number.isInteger(test.awarded)) {
+      throw summaryError(
+        `labScores[${labIndex}].tests[${testIndex}] must contain integer points and awarded values.`,
+      );
+    }
+
+    if (!KNOWN_CHECK_STATUSES.has(test.status)) {
+      throw summaryError(
+        `labScores[${labIndex}].tests[${testIndex}].status must be passed, failed or missing, received ${formatValue(test.status)}.`,
+      );
+    }
+
+    const result = test.status === 'passed' ? 'PASS' : 'FAIL';
+    return `| ${escapeCell(test.label)} | ${test.awarded}/${test.points} | ${result} |`;
+  });
+
+  return [
+    `### ${escapeCell(labScore.title)} — ${labScore.points}/${labScore.maxPoints} ${labScore.status}`,
+    '',
+    '| Check | Points | Result |',
+    '| --- | --- | --- |',
+    ...rows,
+  ];
+}
+
 /** Builds the deterministic Markdown for the GitHub step summary. */
 export function renderSummary(input) {
   if (!isPlainObject(input)) {
@@ -82,6 +128,16 @@ export function renderSummary(input) {
     throw summaryError(`labScores must be an array, received ${formatValue(labScores)}.`);
   }
 
+  const overviewRows = labScores.map(renderRow);
+  const hasFailures = labScores.some((labScore) => labScore.status === 'FAIL');
+  const outcomeNote = hasFailures
+    ? '> Grading completed. A red workflow means at least one published practical is below the pass score; the grader itself did not crash.'
+    : '> Grading completed. All published practicals meet the pass score.';
+  const details = labScores.flatMap((labScore, index) => [
+    '',
+    ...renderDetails(labScore, index),
+  ]);
+
   return [
     HEADING,
     '',
@@ -90,7 +146,10 @@ export function renderSummary(input) {
     '',
     TABLE_HEADER,
     TABLE_DIVIDER,
-    ...labScores.map(renderRow),
+    ...overviewRows,
+    '',
+    outcomeNote,
+    ...details,
     '',
     PROVISIONAL_NOTE,
     '',

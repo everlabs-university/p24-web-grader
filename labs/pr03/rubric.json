@@ -4,13 +4,13 @@
   "maxPoints": 80,
   "passPoints": 48,
   "tests": [
-    { "fullName": "one workout round contains one work step and no trailing rest", "points": 10 },
-    { "fullName": "multiple rounds alternate work and rest in order", "points": 10 },
-    { "fullName": "the final round never adds a trailing rest step", "points": 10 },
-    { "fullName": "zero rest seconds omits rest steps without breaking round numbers", "points": 10 },
-    { "fullName": "the plan reports the exact total duration", "points": 10 },
-    { "fullName": "formatDuration returns zero-padded minute and second text", "points": 10 },
-    { "fullName": "invalid workout values return an error result without throwing", "points": 10 },
-    { "fullName": "repeated calls return independent step arrays", "points": 10 }
+    { "fullName": "one workout round contains one work step and no trailing rest", "label": "Single-round plan", "points": 10 },
+    { "fullName": "multiple rounds alternate work and rest in order", "label": "Multi-round ordering", "points": 10 },
+    { "fullName": "the final round never adds a trailing rest step", "label": "Final-round behavior", "points": 10 },
+    { "fullName": "zero rest seconds omits rest steps without breaking round numbers", "label": "Zero-rest behavior", "points": 10 },
+    { "fullName": "the plan reports the exact total duration", "label": "Total duration", "points": 10 },
+    { "fullName": "formatDuration returns zero-padded minute and second text", "label": "Duration formatting", "points": 10 },
+    { "fullName": "invalid workout values return an error result without throwing", "label": "Invalid workout input handling", "points": 10 },
+    { "fullName": "repeated calls return independent step arrays", "label": "Independent plan results", "points": 10 }
   ]
 }

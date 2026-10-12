@@ -199,6 +199,13 @@ export async function loadRubric(root, labId) {
       );
     }
 
+    if (!isNonEmptyString(test.label)) {
+      throw graderError(
+        'ERR_RUBRIC_SHAPE',
+        `${subject}: tests[${index}].label must be a non-empty public label, received ${formatValue(test.label)}.`,
+      );
+    }
+
     if (!isPointValue(test.points)) {
       throw graderError(
         'ERR_RUBRIC_SHAPE',
@@ -215,7 +222,7 @@ export async function loadRubric(root, labId) {
 
     seenTests.add(test.fullName);
     weightsTotal += test.points;
-    tests.push({ fullName: test.fullName, points: test.points });
+    tests.push({ fullName: test.fullName, label: test.label, points: test.points });
   }
 
   if (weightsTotal !== MAX_POINTS) {

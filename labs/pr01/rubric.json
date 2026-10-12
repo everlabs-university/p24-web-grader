@@ -4,13 +4,13 @@
   "maxPoints": 80,
   "passPoints": 48,
   "tests": [
-    { "fullName": "personal names are non-empty and contain no TODO", "points": 10 },
-    { "fullName": "group is one of the documented P-24 groups", "points": 10 },
-    { "fullName": "fullName combines firstName and lastName", "points": 10 },
-    { "fullName": "specialty is a non-empty value", "points": 10 },
-    { "fullName": "weeklyHours is a realistic finite number", "points": 10 },
-    { "fullName": "semester workload is calculated from 15 weeks", "points": 10 },
-    { "fullName": "intro contains the generated profile details", "points": 10 },
-    { "fullName": "renderProfile receives the profile exactly once", "points": 10 }
+    { "fullName": "personal names are non-empty and contain no TODO", "label": "Personal name completion", "points": 10 },
+    { "fullName": "group is one of the documented P-24 groups", "label": "Group selection", "points": 10 },
+    { "fullName": "fullName combines firstName and lastName", "label": "Full name composition", "points": 10 },
+    { "fullName": "specialty is a non-empty value", "label": "Specialty completion", "points": 10 },
+    { "fullName": "weeklyHours is a realistic finite number", "label": "Weekly workload value", "points": 10 },
+    { "fullName": "semester workload is calculated from 15 weeks", "label": "Semester workload calculation", "points": 10 },
+    { "fullName": "intro contains the generated profile details", "label": "Profile introduction", "points": 10 },
+    { "fullName": "renderProfile receives the profile exactly once", "label": "Profile rendering", "points": 10 }
   ]
 }

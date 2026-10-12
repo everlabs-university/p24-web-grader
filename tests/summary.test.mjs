@@ -17,6 +17,15 @@ const PASSING_LAB = {
   status: 'PASS',
   passedTests: 6,
   totalTests: 8,
+  tests: [
+    {
+      fullName: 'internal assertion with exact values that must stay private',
+      label: 'Public profile data',
+      points: 10,
+      awarded: 10,
+      status: 'passed',
+    },
+  ],
 };
 
 const FAILING_LAB = {
@@ -27,6 +36,22 @@ const FAILING_LAB = {
   status: 'FAIL',
   passedTests: 4,
   totalTests: 8,
+  tests: [
+    {
+      fullName: 'internal assertion with exact values that must stay private',
+      label: 'Base checkout calculation',
+      points: 10,
+      awarded: 0,
+      status: 'failed',
+    },
+    {
+      fullName: 'another private assertion',
+      label: 'Invalid input handling',
+      points: 10,
+      awarded: 10,
+      status: 'passed',
+    },
+  ],
 };
 
 function scoreRowsOf(markdown) {
@@ -105,5 +130,32 @@ describe('renderSummary', () => {
       markdown.includes(PROVISIONAL_SENTENCE),
       'summary must state the result is provisional until the exact-SHA local audit',
     );
+  });
+
+  it('explains that a red workflow is a grading result rather than a grader crash', () => {
+    const markdown = renderSummary({
+      sha: STUDENT_SHA,
+      graderVersion: '2026.09.07.1',
+      labScores: [PASSING_LAB, FAILING_LAB],
+    });
+
+    assert.match(markdown, /Grading completed/i);
+    assert.match(markdown, /red workflow/i);
+    assert.match(markdown, /grader itself did not crash/i);
+  });
+
+  it('renders neutral per-check results without leaking internal assertion names', () => {
+    const markdown = renderSummary({
+      sha: STUDENT_SHA,
+      graderVersion: '2026.09.07.1',
+      labScores: [FAILING_LAB],
+    });
+
+    assert.match(markdown, /^### Practical 2 — Smart Checkout — 40\/80 FAIL$/m);
+    assert.match(markdown, /^\| Check \| Points \| Result \|$/m);
+    assert.match(markdown, /^\| Base checkout calculation \| 0\/10 \| FAIL \|$/m);
+    assert.match(markdown, /^\| Invalid input handling \| 10\/10 \| PASS \|$/m);
+    assert.equal(markdown.includes('internal assertion with exact values'), false);
+    assert.equal(markdown.includes('another private assertion'), false);
   });
 });

@@ -42,6 +42,39 @@ const PR03_BEHAVIOURS = [
   'repeated calls return independent step arrays',
 ];
 
+const PUBLIC_LABELS = {
+  pr01: [
+    'Personal name completion',
+    'Group selection',
+    'Full name composition',
+    'Specialty completion',
+    'Weekly workload value',
+    'Semester workload calculation',
+    'Profile introduction',
+    'Profile rendering',
+  ],
+  pr02: [
+    'Base pickup calculation',
+    'Student discount behavior',
+    'Threshold discount behavior',
+    'Express delivery behavior',
+    'Discount boundary',
+    'Standard delivery boundary',
+    'Invalid subtotal handling',
+    'Invalid option handling',
+  ],
+  pr03: [
+    'Single-round plan',
+    'Multi-round ordering',
+    'Final-round behavior',
+    'Zero-rest behavior',
+    'Total duration',
+    'Duration formatting',
+    'Invalid workout input handling',
+    'Independent plan results',
+  ],
+};
+
 async function writePublished(root, text) {
   await writeFile(join(root, 'published.json'), text, 'utf8');
 }
@@ -55,7 +88,7 @@ describe('shipped grader manifest', () => {
   it('loads the published PR03 manifest cumulatively', async () => {
     assert.deepStrictEqual(await loadPublished(GRADER_ROOT), {
       schemaVersion: 1,
-      graderVersion: '2026.10.09.1',
+      graderVersion: '2026.10.12.1',
       labs: ['pr01', 'pr02', 'pr03'],
     });
   });
@@ -73,6 +106,7 @@ describe('shipped grader manifest', () => {
       assert.equal(rubric.maxPoints, 80);
       assert.equal(rubric.passPoints, 48);
       assert.deepStrictEqual(rubric.tests.map((entry) => entry.fullName), behaviours);
+      assert.deepStrictEqual(rubric.tests.map((entry) => entry.label), PUBLIC_LABELS[labId]);
       assert.deepStrictEqual(rubric.tests.map((entry) => entry.points), Array(8).fill(10));
     });
   }
@@ -116,8 +150,8 @@ describe('manifest validation', () => {
   "maxPoints": 80,
   "passPoints": 48,
   "tests": [
-    { "fullName": "first behaviour", "points": 40 },
-    { "fullName": "second behaviour", "points": 30 }
+    { "fullName": "first behaviour", "label": "First check", "points": 40 },
+    { "fullName": "second behaviour", "label": "Second check", "points": 30 }
   ]
 }\n`);
 
@@ -134,8 +168,8 @@ describe('manifest validation', () => {
   "maxPoints": 80,
   "passPoints": 96,
   "tests": [
-    { "fullName": "duplicate", "points": 40 },
-    { "fullName": "duplicate", "points": 40 }
+    { "fullName": "duplicate", "label": "First check", "points": 40 },
+    { "fullName": "duplicate", "label": "Second check", "points": 40 }
   ]
 }\n`);
 

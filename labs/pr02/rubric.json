@@ -4,13 +4,13 @@
   "maxPoints": 80,
   "passPoints": 48,
   "tests": [
-    { "fullName": "pickup without a discount keeps a 500 UAH total", "points": 10 },
-    { "fullName": "a student receives 5 percent before standard delivery", "points": 10 },
-    { "fullName": "a 1000 UAH order receives 10 percent and free standard delivery", "points": 10 },
-    { "fullName": "express delivery stays 150 UAH and the stronger discount wins", "points": 10 },
-    { "fullName": "the 1000 UAH discount boundary is inclusive", "points": 10 },
-    { "fullName": "standard delivery becomes free at a discounted subtotal of 750", "points": 10 },
-    { "fullName": "invalid subtotal values return an error result without throwing", "points": 10 },
-    { "fullName": "invalid student or delivery values return an error result without throwing", "points": 10 }
+    { "fullName": "pickup without a discount keeps a 500 UAH total", "label": "Base pickup calculation", "points": 10 },
+    { "fullName": "a student receives 5 percent before standard delivery", "label": "Student discount behavior", "points": 10 },
+    { "fullName": "a 1000 UAH order receives 10 percent and free standard delivery", "label": "Threshold discount behavior", "points": 10 },
+    { "fullName": "express delivery stays 150 UAH and the stronger discount wins", "label": "Express delivery behavior", "points": 10 },
+    { "fullName": "the 1000 UAH discount boundary is inclusive", "label": "Discount boundary", "points": 10 },
+    { "fullName": "standard delivery becomes free at a discounted subtotal of 750", "label": "Standard delivery boundary", "points": 10 },
+    { "fullName": "invalid subtotal values return an error result without throwing", "label": "Invalid subtotal handling", "points": 10 },
+    { "fullName": "invalid student or delivery values return an error result without throwing", "label": "Invalid option handling", "points": 10 }
   ]
 }

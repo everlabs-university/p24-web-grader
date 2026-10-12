@@ -229,4 +229,37 @@ describe('scoreLab', () => {
     assert.equal(score.points, 30);
     assert.equal(score.status, 'FAIL');
   });
+
+  it('carries a neutral public label into the per-test breakdown', () => {
+    const rubric = {
+      id: 'pr02',
+      title: 'Practical 2 — Smart Checkout',
+      maxPoints: 10,
+      passPoints: 10,
+      tests: [
+        {
+          fullName: 'internal assertion with exact values that must stay private',
+          label: 'Base checkout calculation',
+          points: 10,
+        },
+      ],
+    };
+
+    const score = scoreLab(rubric, [
+      {
+        fullName: 'internal assertion with exact values that must stay private',
+        status: 'failed',
+      },
+    ]);
+
+    assert.deepStrictEqual(score.tests, [
+      {
+        fullName: 'internal assertion with exact values that must stay private',
+        label: 'Base checkout calculation',
+        points: 10,
+        awarded: 0,
+        status: 'failed',
+      },
+    ]);
+  });
 });
