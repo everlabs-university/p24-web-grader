@@ -104,6 +104,16 @@ const PUBLIC_LABELS = {
     'Discount and shipping rules',
     'Malformed input handling',
   ],
+  pr06: [
+    'Quiz model initialization',
+    'Answer selection',
+    'Submission and score lock',
+    'Quiz progression',
+    'Quiz restart',
+    'Initial accessible rendering',
+    'Complete browser flow',
+    'Invalid data handling',
+  ],
 };
 
 const PR05_BEHAVIOURS = [

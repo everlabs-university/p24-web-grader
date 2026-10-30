@@ -4,13 +4,13 @@
   "maxPoints": 80,
   "passPoints": 48,
   "tests": [
-    { "fullName": "creating a quiz validates and clones the question model", "points": 10 },
-    { "fullName": "selecting an answer updates state immutably and rejects unknown answers", "points": 10 },
-    { "fullName": "submitting locks the answer and awards each question at most once", "points": 10 },
-    { "fullName": "next question advances the flow and completes the final question", "points": 10 },
-    { "fullName": "restarting produces a clean independent quiz state", "points": 10 },
-    { "fullName": "mounting renders the first question answers and progress accessibly", "points": 10 },
-    { "fullName": "the browser flow selects submits advances and renders final results", "points": 10 },
-    { "fullName": "invalid quiz data renders an accessible error without throwing", "points": 10 }
+    { "fullName": "creating a quiz validates and clones the question model", "label": "Quiz model initialization", "points": 10 },
+    { "fullName": "selecting an answer updates state immutably and rejects unknown answers", "label": "Answer selection", "points": 10 },
+    { "fullName": "submitting locks the answer and awards each question at most once", "label": "Submission and score lock", "points": 10 },
+    { "fullName": "next question advances the flow and completes the final question", "label": "Quiz progression", "points": 10 },
+    { "fullName": "restarting produces a clean independent quiz state", "label": "Quiz restart", "points": 10 },
+    { "fullName": "mounting renders the first question answers and progress accessibly", "label": "Initial accessible rendering", "points": 10 },
+    { "fullName": "the browser flow selects submits advances and renders final results", "label": "Complete browser flow", "points": 10 },
+    { "fullName": "invalid quiz data renders an accessible error without throwing", "label": "Invalid data handling", "points": 10 }
   ]
 }
