@@ -1,0 +1,16 @@
+{
+  "id": "pr07",
+  "title": "Practical 7 — Task Board",
+  "maxPoints": 80,
+  "passPoints": 48,
+  "tests": [
+    { "fullName": "creating a board validates clones and normalizes the initial state", "label": "Board initialization", "points": 10 },
+    { "fullName": "adding a task is immutable and rejects duplicate or malformed tasks", "label": "Task addition", "points": 10 },
+    { "fullName": "moving and removing tasks enforce valid transitions without mutation", "label": "Task movement and removal", "points": 10 },
+    { "fullName": "visible tasks derive from query and status without changing source order", "label": "Search and filter derivation", "points": 10 },
+    { "fullName": "serializing and restoring the board preserves durable state safely", "label": "Persistence round trip", "points": 10 },
+    { "fullName": "mounting renders an accessible board with columns counts and controls", "label": "Initial board rendering", "points": 10 },
+    { "fullName": "the browser flow adds moves filters and removes a task", "label": "Complete browser flow", "points": 10 },
+    { "fullName": "invalid initial or stored data renders a recoverable error state", "label": "Invalid data recovery", "points": 10 }
+  ]
+}

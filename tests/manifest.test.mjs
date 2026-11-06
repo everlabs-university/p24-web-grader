@@ -114,6 +114,16 @@ const PUBLIC_LABELS = {
     'Complete browser flow',
     'Invalid data handling',
   ],
+  pr07: [
+    'Board initialization',
+    'Task addition',
+    'Task movement and removal',
+    'Search and filter derivation',
+    'Persistence round trip',
+    'Initial board rendering',
+    'Complete browser flow',
+    'Invalid data recovery',
+  ],
 };
 
 const PR05_BEHAVIOURS = [
@@ -138,6 +148,17 @@ const PR06_BEHAVIOURS = [
   'invalid quiz data renders an accessible error without throwing',
 ];
 
+const PR07_BEHAVIOURS = [
+  'creating a board validates clones and normalizes the initial state',
+  'adding a task is immutable and rejects duplicate or malformed tasks',
+  'moving and removing tasks enforce valid transitions without mutation',
+  'visible tasks derive from query and status without changing source order',
+  'serializing and restoring the board preserves durable state safely',
+  'mounting renders an accessible board with columns counts and controls',
+  'the browser flow adds moves filters and removes a task',
+  'invalid initial or stored data renders a recoverable error state',
+];
+
 async function writePublished(root, text) {
   await writeFile(join(root, 'published.json'), text, 'utf8');
 }
@@ -148,11 +169,11 @@ async function writeRubric(root, labId, text) {
 }
 
 describe('shipped grader manifest', () => {
-  it('loads the published PR06 manifest cumulatively', async () => {
+  it('loads the published PR07 manifest cumulatively', async () => {
     assert.deepStrictEqual(await loadPublished(GRADER_ROOT), {
       schemaVersion: 1,
-      graderVersion: '2026.11.06.1',
-      labs: ['pr01', 'pr02', 'pr03', 'pr04', 'pr05', 'pr06'],
+      graderVersion: '2026.11.06.2',
+      labs: ['pr01', 'pr02', 'pr03', 'pr04', 'pr05', 'pr06', 'pr07'],
     });
   });
 
@@ -163,6 +184,7 @@ describe('shipped grader manifest', () => {
     ['pr04', 'Practical 4 — Leaderboard Analyzer', PR04_BEHAVIOURS],
     ['pr05', 'Practical 5 — Modular Shopping Cart', PR05_BEHAVIOURS],
     ['pr06', 'Practical 6 — Interactive Quiz', PR06_BEHAVIOURS],
+    ['pr07', 'Practical 7 — Task Board', PR07_BEHAVIOURS],
   ]) {
     it(`loads ${labId} as eight ten-point behaviours with a 48 pass mark`, async () => {
       const rubric = await loadRubric(GRADER_ROOT, labId);
