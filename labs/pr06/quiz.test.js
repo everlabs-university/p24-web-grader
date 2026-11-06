@@ -56,7 +56,35 @@ function start(engine, questions = questionsFixture()) {
 }
 
 function click(window, element) {
+  if (typeof element?.click === 'function') {
+    element.click();
+    return;
+  }
   element.dispatchEvent(new window.MouseEvent('click', { bubbles: true }));
+}
+
+function progress(root) {
+  return root.querySelector('[data-quiz-progress], .quiz-progress');
+}
+
+function answerControls(root) {
+  return [...root.querySelectorAll('[data-answer-id], input[type="radio"]')];
+}
+
+function answerControl(root, answerId) {
+  return answerControls(root).find((control) => (
+    control.dataset.answerId === answerId
+    || control.dataset.id === answerId
+    || control.value === answerId
+  ));
+}
+
+function action(root, name) {
+  return root.querySelector(`[data-action="${name}"], .${name}-btn`);
+}
+
+function isSelected(control) {
+  return control.getAttribute('aria-checked') === 'true' || control.checked === true;
 }
 
 it('creating a quiz validates and clones the question model', async () => {
@@ -155,11 +183,11 @@ it('mounting renders the first question answers and progress accessibly', async 
   const result = mountQuiz(root, questionsFixture());
 
   expect(result.ok).toBe(true);
-  expect(root.querySelector('[data-quiz-progress]').textContent).toContain('1 / 2');
+  expect(progress(root).textContent).toContain('1 / 2');
   expect(root.querySelector('h1, h2').textContent).toContain('What does the DOM represent?');
-  expect(root.querySelectorAll('button[data-answer-id]')).toHaveLength(2);
+  expect(answerControls(root)).toHaveLength(2);
   expect(root.querySelector('[role="radiogroup"]')).not.toBeNull();
-  expect(root.querySelector('button[data-action="submit"]').disabled).toBe(true);
+  expect(action(root, 'submit').disabled).toBe(true);
 });
 
 it('the browser flow selects submits advances and renders final results', async () => {
@@ -168,23 +196,23 @@ it('the browser flow selects submits advances and renders final results', async 
   const root = dom.window.document.querySelector('#quiz');
   mountQuiz(root, questionsFixture());
 
-  click(dom.window, root.querySelector('[data-answer-id="tree"]'));
-  expect(root.querySelector('[data-answer-id="tree"]').getAttribute('aria-checked')).toBe('true');
-  click(dom.window, root.querySelector('[data-action="submit"]'));
-  expect(root.querySelector('[role="status"]').textContent).toMatch(/correct/i);
-  expect([...root.querySelectorAll('[data-answer-id]')].every((button) => button.disabled)).toBe(true);
-  click(dom.window, root.querySelector('[data-action="next"]'));
+  click(dom.window, answerControl(root, 'tree'));
+  expect(isSelected(answerControl(root, 'tree'))).toBe(true);
+  click(dom.window, action(root, 'submit'));
+  expect(root.querySelector('[role="status"], .feedback').textContent).toMatch(/correct/i);
+  expect(answerControls(root).every((control) => control.disabled)).toBe(true);
+  click(dom.window, action(root, 'next'));
 
-  expect(root.querySelector('[data-quiz-progress]').textContent).toContain('2 / 2');
-  click(dom.window, root.querySelector('[data-answer-id="query"]'));
-  click(dom.window, root.querySelector('[data-action="submit"]'));
-  click(dom.window, root.querySelector('[data-action="next"]'));
+  expect(progress(root).textContent).toContain('2 / 2');
+  click(dom.window, answerControl(root, 'query'));
+  click(dom.window, action(root, 'submit'));
+  click(dom.window, action(root, 'next'));
 
   expect(root.textContent).toMatch(/quiz complete/i);
-  expect(root.querySelector('[data-quiz-score]').textContent).toContain('1 / 2');
-  expect(root.querySelector('[data-action="restart"]')).not.toBeNull();
-  click(dom.window, root.querySelector('[data-action="restart"]'));
-  expect(root.querySelector('[data-quiz-progress]').textContent).toContain('1 / 2');
+  expect(root.querySelector('[data-quiz-score], .quiz-score, .score').textContent).toContain('1 / 2');
+  expect(action(root, 'restart')).not.toBeNull();
+  click(dom.window, action(root, 'restart'));
+  expect(progress(root).textContent).toContain('1 / 2');
 });
 
 it('invalid quiz data renders an accessible error without throwing', async () => {

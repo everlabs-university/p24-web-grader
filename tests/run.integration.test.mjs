@@ -11,6 +11,7 @@ const GRADER_ROOT = fileURLToPath(new URL('..', import.meta.url));
 const RUNNER = join('src', 'run.mjs');
 const PASS_FIXTURE = join(GRADER_ROOT, 'fixtures', 'pass');
 const STARTER_FIXTURE = join(GRADER_ROOT, 'fixtures', 'starter');
+const NATIVE_RADIO_FIXTURE = join(GRADER_ROOT, 'fixtures', 'native-radio');
 const TEMP_SUITE_DIRNAME = '.p24-web-grader';
 const STUDENT_SHA = '0123456789abcdef0123456789abcdef01234567';
 const RUN_TIMEOUT_MS = 180_000;
@@ -74,6 +75,7 @@ describe('node src/run.mjs', () => {
     await rm(workspace, { recursive: true, force: true });
     await rm(join(PASS_FIXTURE, TEMP_SUITE_DIRNAME), { recursive: true, force: true });
     await rm(join(STARTER_FIXTURE, TEMP_SUITE_DIRNAME), { recursive: true, force: true });
+    await rm(join(NATIVE_RADIO_FIXTURE, TEMP_SUITE_DIRNAME), { recursive: true, force: true });
   });
 
   it('scores all six published practicals 80/80 and exits 0', { timeout: RUN_TIMEOUT_MS }, async () => {
@@ -106,6 +108,20 @@ describe('node src/run.mjs', () => {
     assert.deepStrictEqual(report.labs.map(({ points }) => points), [20, 20, 10, 10, 30, 10]);
     assert.deepStrictEqual(report.labs.map(({ status }) => status), ['FAIL', 'FAIL', 'FAIL', 'FAIL', 'FAIL', 'FAIL']);
     assertTemporarySuiteRemoved(STARTER_FIXTURE);
+  });
+
+  it('accepts a behaviorally correct native-radio quiz UI without private data selectors', { timeout: RUN_TIMEOUT_MS }, async () => {
+    const result = await runGrader({ studentRoot: NATIVE_RADIO_FIXTURE, summaryFile, resultFile });
+    assert.equal(result.code, 1, `stderr:\n${result.stderr}`);
+
+    const report = await readResult(resultFile);
+    const pr06 = report.labs.find(({ id }) => id === 'pr06');
+    assert.equal(pr06.points, 40);
+    assert.deepStrictEqual(
+      pr06.tests.filter(({ status }) => status === 'passed').map(({ label }) => label),
+      ['Quiz progression', 'Initial accessible rendering', 'Complete browser flow', 'Invalid data handling'],
+    );
+    assertTemporarySuiteRemoved(NATIVE_RADIO_FIXTURE);
   });
 
   it('exits 2 when published.json is malformed', { timeout: RUN_TIMEOUT_MS }, async () => {
