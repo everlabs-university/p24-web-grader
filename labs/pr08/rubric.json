@@ -1,0 +1,16 @@
+{
+  "id": "pr08",
+  "title": "Practical 8 — GitHub Profile Explorer",
+  "maxPoints": 80,
+  "passPoints": 48,
+  "tests": [
+    { "fullName": "normalizes valid GitHub usernames and rejects invalid input without throwing", "label": "Username validation", "points": 10 },
+    { "fullName": "maps a valid GitHub payload to the documented profile model", "label": "Profile data mapping", "points": 10 },
+    { "fullName": "requests the encoded profile endpoint with JSON headers and cancellation support", "label": "API request contract", "points": 10 },
+    { "fullName": "turns HTTP network abort and malformed-response failures into result objects", "label": "Request error handling", "points": 10 },
+    { "fullName": "mounts an accessible idle search interface", "label": "Accessible search interface", "points": 10 },
+    { "fullName": "renders loading and success states from one submitted search", "label": "Loading and success states", "points": 10 },
+    { "fullName": "validates empty input and renders request errors without stale profile content", "label": "Validation and error states", "points": 10 },
+    { "fullName": "aborts an older request and ignores its late response", "label": "Overlapping request safety", "points": 10 }
+  ]
+}
