@@ -1,0 +1,16 @@
+{
+  "id": "pr09",
+  "title": "Practical 9 — Typed Expense Tracker",
+  "maxPoints": 80,
+  "passPoints": 48,
+  "tests": [
+    { "fullName": "creates a validated ledger and clones every accepted expense", "label": "Ledger creation and cloning", "points": 10 },
+    { "fullName": "rejects malformed expenses and invalid categories without throwing", "label": "Expense validation", "points": 10 },
+    { "fullName": "adds a normalized expense immutably", "label": "Immutable expense addition", "points": 10 },
+    { "fullName": "rejects duplicate identifiers without changing the source ledger", "label": "Duplicate identifier handling", "points": 10 },
+    { "fullName": "removes an existing expense immutably and reports unknown identifiers", "label": "Immutable expense removal", "points": 10 },
+    { "fullName": "filters by category text amount and date without reordering the source", "label": "Expense filtering", "points": 10 },
+    { "fullName": "summarizes count total average and category totals exactly", "label": "Expense summaries", "points": 10 },
+    { "fullName": "returns independent result objects across repeated operations", "label": "Independent operation results", "points": 10 }
+  ]
+}

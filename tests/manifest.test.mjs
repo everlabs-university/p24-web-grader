@@ -134,6 +134,16 @@ const PUBLIC_LABELS = {
     'Validation and error states',
     'Overlapping request safety',
   ],
+  pr09: [
+    'Ledger creation and cloning',
+    'Expense validation',
+    'Immutable expense addition',
+    'Duplicate identifier handling',
+    'Immutable expense removal',
+    'Expense filtering',
+    'Expense summaries',
+    'Independent operation results',
+  ],
 };
 
 const PR05_BEHAVIOURS = [
@@ -180,6 +190,17 @@ const PR08_BEHAVIOURS = [
   'aborts an older request and ignores its late response',
 ];
 
+const PR09_BEHAVIOURS = [
+  'creates a validated ledger and clones every accepted expense',
+  'rejects malformed expenses and invalid categories without throwing',
+  'adds a normalized expense immutably',
+  'rejects duplicate identifiers without changing the source ledger',
+  'removes an existing expense immutably and reports unknown identifiers',
+  'filters by category text amount and date without reordering the source',
+  'summarizes count total average and category totals exactly',
+  'returns independent result objects across repeated operations',
+];
+
 async function writePublished(root, text) {
   await writeFile(join(root, 'published.json'), text, 'utf8');
 }
@@ -190,11 +211,11 @@ async function writeRubric(root, labId, text) {
 }
 
 describe('shipped grader manifest', () => {
-  it('loads the published PR08 manifest cumulatively', async () => {
+  it('loads the published PR09 manifest cumulatively', async () => {
     assert.deepStrictEqual(await loadPublished(GRADER_ROOT), {
       schemaVersion: 1,
-      graderVersion: '2026.11.13.1',
-      labs: ['pr01', 'pr02', 'pr03', 'pr04', 'pr05', 'pr06', 'pr07', 'pr08'],
+      graderVersion: '2026.11.20.1',
+      labs: ['pr01', 'pr02', 'pr03', 'pr04', 'pr05', 'pr06', 'pr07', 'pr08', 'pr09'],
     });
   });
 
@@ -207,6 +228,7 @@ describe('shipped grader manifest', () => {
     ['pr06', 'Practical 6 — Interactive Quiz', PR06_BEHAVIOURS],
     ['pr07', 'Practical 7 — Task Board', PR07_BEHAVIOURS],
     ['pr08', 'Practical 8 — GitHub Profile Explorer', PR08_BEHAVIOURS],
+    ['pr09', 'Practical 9 — Typed Expense Tracker', PR09_BEHAVIOURS],
   ]) {
     it(`loads ${labId} as eight ten-point behaviours with a 48 pass mark`, async () => {
       const rubric = await loadRubric(GRADER_ROOT, labId);
