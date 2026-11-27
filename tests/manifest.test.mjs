@@ -144,6 +144,16 @@ const PUBLIC_LABELS = {
     'Expense summaries',
     'Independent operation results',
   ],
+  pr10: [
+    'Title search',
+    'Category search',
+    'Immutable filtering',
+    'Bounded first page',
+    'Pagination',
+    'Bounded DOM rendering',
+    'Safe text rendering',
+    'Empty state',
+  ],
 };
 
 const PR05_BEHAVIOURS = [
@@ -201,6 +211,17 @@ const PR09_BEHAVIOURS = [
   'returns independent result objects across repeated operations',
 ];
 
+const PR10_BEHAVIOURS = [
+  'filters product titles case-insensitively with surrounding whitespace',
+  'filters categories and preserves source order',
+  'never mutates the supplied product collection',
+  'limits the first visible page without discarding total matches',
+  'shows the next page and does not repeat earlier products',
+  'renders a bounded set of product cards for a large collection',
+  'escapes product titles instead of injecting HTML into results',
+  'renders an empty state and hides more when nothing matches',
+];
+
 async function writePublished(root, text) {
   await writeFile(join(root, 'published.json'), text, 'utf8');
 }
@@ -211,11 +232,11 @@ async function writeRubric(root, labId, text) {
 }
 
 describe('shipped grader manifest', () => {
-  it('loads the published PR09 manifest cumulatively', async () => {
+  it('loads the published PR10 manifest cumulatively', async () => {
     assert.deepStrictEqual(await loadPublished(GRADER_ROOT), {
       schemaVersion: 1,
-      graderVersion: '2026.11.20.1',
-      labs: ['pr01', 'pr02', 'pr03', 'pr04', 'pr05', 'pr06', 'pr07', 'pr08', 'pr09'],
+      graderVersion: '2026.11.27.1',
+      labs: ['pr01', 'pr02', 'pr03', 'pr04', 'pr05', 'pr06', 'pr07', 'pr08', 'pr09', 'pr10'],
     });
   });
 
@@ -229,6 +250,7 @@ describe('shipped grader manifest', () => {
     ['pr07', 'Practical 7 — Task Board', PR07_BEHAVIOURS],
     ['pr08', 'Practical 8 — GitHub Profile Explorer', PR08_BEHAVIOURS],
     ['pr09', 'Practical 9 — Typed Expense Tracker', PR09_BEHAVIOURS],
+    ['pr10', 'Practical 10 — Performance Catalog', PR10_BEHAVIOURS],
   ]) {
     it(`loads ${labId} as eight ten-point behaviours with a 48 pass mark`, async () => {
       const rubric = await loadRubric(GRADER_ROOT, labId);

@@ -1,0 +1,16 @@
+{
+  "id": "pr10",
+  "title": "Practical 10 — Performance Catalog",
+  "maxPoints": 80,
+  "passPoints": 48,
+  "tests": [
+    { "fullName": "filters product titles case-insensitively with surrounding whitespace", "label": "Title search", "points": 10 },
+    { "fullName": "filters categories and preserves source order", "label": "Category search", "points": 10 },
+    { "fullName": "never mutates the supplied product collection", "label": "Immutable filtering", "points": 10 },
+    { "fullName": "limits the first visible page without discarding total matches", "label": "Bounded first page", "points": 10 },
+    { "fullName": "shows the next page and does not repeat earlier products", "label": "Pagination", "points": 10 },
+    { "fullName": "renders a bounded set of product cards for a large collection", "label": "Bounded DOM rendering", "points": 10 },
+    { "fullName": "escapes product titles instead of injecting HTML into results", "label": "Safe text rendering", "points": 10 },
+    { "fullName": "renders an empty state and hides more when nothing matches", "label": "Empty state", "points": 10 }
+  ]
+}
